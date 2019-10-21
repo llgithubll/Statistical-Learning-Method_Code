@@ -15,14 +15,64 @@
 实现
 ======
 
+### 第一章 统计学习方法概论：
+1. 正则化正则的是什么东西？为什么正则化是有效的？
+
 ### 第二章 感知机：
 博客：[统计学习方法|感知机原理剖析及实现](http://www.pkudodo.com/2018/11/18/1-4/)      
 实现：[perceptron/perceptron_dichotomy.py](https://github.com/Dod-o/Statistical-Learning-Method_Code/blob/master/perceptron/perceptron_dichotomy.py)
-      
+
+* 感知机只能做2分类
+
+1. 感知机为什么不能学习到异或函数？
+感知机是线性分类模型，且要求数据线性可分；异或数据线性不可分；
+    
 ### 第三章 K近邻：
 博客：[统计学习方法|K近邻原理剖析及实现](http://www.pkudodo.com/2018/11/19/1-2/)      
 实现：[KNN/KNN.py](https://github.com/Dod-o/Statistical-Learning-Method_Code/blob/master/KNN/KNN.py)
-      
+
+```text
+test_num 200
+k: 3, algorithm: auto, acc: 0.985, time: 38.499552488327026
+k: 5, algorithm: auto, acc: 0.985, time: 34.0736927986145
+k: 7, algorithm: auto, acc: 0.985, time: 33.51259231567383
+k: 9, algorithm: auto, acc: 0.97, time: 33.39327883720398
+k: 11, algorithm: auto, acc: 0.975, time: 33.489667654037476
+k: 25, algorithm: auto, acc: 0.97, time: 33.61124324798584
+
+k: 5, algorithm: auto, acc: 0.985, time: 34.13753056526184
+k: 5, algorithm: ball_tree, acc: 0.985, time: 30.861292600631714
+k: 5, algorithm: kd_tree, acc: 0.985, time: 33.43804955482483
+k: 5, algorithm: brute, acc: 0.985, time: 3.819897413253784   ？？？
+
+为什么brute方法这么快？因为其他算法build tree耗时吗？把测试用例增多？维度太多了？
+test_num 6000
+k: 3, algorithm: brute, acc: 0.961, time: 13.932093143463135
+k: 5, algorithm: brute, acc: 0.9586666666666667, time: 15.558129072189331
+k: 7, algorithm: brute, acc: 0.9595, time: 16.31393051147461
+k: 9, algorithm: brute, acc: 0.9551666666666667, time: 15.201151847839355
+k: 11, algorithm: brute, acc: 0.9561666666666667, time: 14.665371417999268
+k: 25, algorithm: brute, acc: 0.9478333333333333, time: 15.074190378189087
+
+k: 5, algorithm: auto, acc: 0.9586666666666667, time: 423.38795590400696
+k: 5, algorithm: ball_tree, acc: 0.9586666666666667, time: 331.3267414569855
+k: 5, algorithm: kd_tree, acc: 0.9586666666666667, time: 421.28932213783264
+k: 5, algorithm: brute, acc: 0.9586666666666667, time: 14.77004075050354
+```
+以上是对MNIST数据集进行分类的效果。sample的维度很多（784列），这可能是造成基于树的模型变慢的原因。
+
+
+* k近邻三要素：距离度量，k值选择，决策规则（如，多数表决）
+* k值减小，模型变复杂，容易过拟合，如果邻近实例恰好是噪声，预测就会出错；k值增大，模型就会变简单，即使不相关（距离远）的实例，也会对预测影响。
+* kd树算法更适用于训练实例数 >> 空间维数 的k近邻搜索. 空间维度太多，搜索效率会下降。
+* k近邻的每个特征都会参与距离计算，不相关的属性会对分类结果有很大影响（最近邻算法对此特别敏感）（可以使用交叉验证，为每个属性挑选权重）
+
+
+1. k值怎么选择？ **k一般取较小值(3, 4, 5)，使用交叉验证选择最优k值**；
+2. k近邻的适用场景？
+
+
+
 ### 第四章 朴素贝叶斯：
 博客：[统计学习方法|朴素贝叶斯原理剖析及实现](http://www.pkudodo.com/2018/11/21/1-3/)      
 实现：[NaiveBayes/NaiveBayes.py](https://github.com/Dod-o/Statistical-Learning-Method_Code/blob/master/NaiveBayes/NaiveBayes.py)    

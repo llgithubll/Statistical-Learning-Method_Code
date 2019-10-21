@@ -1,4 +1,6 @@
 .idea
+Mnist/mnist_test.csv
+Mnist/mnist_train.csv
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

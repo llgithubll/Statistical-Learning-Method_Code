@@ -10,7 +10,8 @@
 ------------------------------
 运行结果：
 正确率：81.72%（二分类）
-运行时长：78.6s
+数据加载时长：21s
+模型训练时长：115s
 '''
 
 import numpy as np
@@ -136,7 +137,6 @@ def test(dataArr, labelArr, w, b):
 
 if __name__ == '__main__':
     #获取当前时间
-    #在文末同样获取当前时间，两时间差即为程序运行时间
     start = time.time()
 
     #获取训练集及标签
@@ -144,15 +144,15 @@ if __name__ == '__main__':
     #获取测试集及标签
     testData, testLabel = loadData('../Mnist/mnist_test.csv')
 
+    print('load time', time.time() - start)
+
+    start = time.time()
     #训练获得权重
     w, b = perceptron(trainData, trainLabel, iter = 30)
     #进行测试，获得正确率
     accruRate = test(testData, testLabel, w, b)
+    print('train time', time.time() - start)
 
-    #获取当前时间，作为结束时间
-    end = time.time()
     #显示正确率
     print('accuracy rate is:', accruRate)
-    #显示用时时长
-    print('time span:', end - start)
 
